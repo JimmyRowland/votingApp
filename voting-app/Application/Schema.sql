@@ -1,24 +1,28 @@
 -- Your database schema. Use the Schema Designer at http://localhost:8001/ to add some tables.
 CREATE TABLE polls (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
-    name TEXT NOT NULL
+    name TEXT NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
 );
 CREATE TABLE options (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
     option_label TEXT NOT NULL,
-    poll_id UUID NOT NULL
+    poll_id UUID NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
 );
 CREATE INDEX options_poll_id_index ON options (poll_id);
 CREATE TABLE votes (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
-    poll_id UUID NOT NULL
+    poll_id UUID NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
 );
 CREATE INDEX votes_poll_id_index ON votes (poll_id);
 CREATE TABLE ranks (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
     option_id UUID NOT NULL,
     vote_id UUID NOT NULL,
-    rank INT NOT NULL
+    rank INT NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
 );
 CREATE INDEX ranks_option_id_index ON ranks (option_id);
 CREATE INDEX ranks_vote_id_index ON ranks (vote_id);

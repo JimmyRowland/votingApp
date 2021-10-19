@@ -10,7 +10,7 @@ instance View IndexView where
                 <li class="breadcrumb-item active"><a href={PollsAction}>Polls</a></li>
             </ol>
         </nav>
-        <h1>Index <a href={pathTo NewPollAction} class="btn btn-primary ml-4">+ New</a></h1>
+        <h1>Create new polls <a href={pathTo NewPollAction} class="btn btn-primary ml-4">+ New</a></h1>
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -30,7 +30,7 @@ instance View IndexView where
 renderPoll :: Poll -> Html
 renderPoll poll = [hsx|
     <tr>
-        <td>{poll}</td>
+        <td>{get #name poll}</td>
         <td><a href={ShowPollAction (get #id poll)}>Show</a></td>
         <td><a href={EditPollAction (get #id poll)} class="text-muted">Edit</a></td>
         <td><a href={DeletePollAction (get #id poll)} class="js-delete text-muted">Delete</a></td>

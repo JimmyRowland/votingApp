@@ -21,7 +21,7 @@ data PollsController
 
 data OptionsController
     = OptionsAction
-    | NewOptionAction
+    | NewOptionAction { pollId :: !(Id Poll) }
     | ShowOptionAction { optionId :: !(Id Option) }
     | CreateOptionAction
     | EditOptionAction { optionId :: !(Id Option) }

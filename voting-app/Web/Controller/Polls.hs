@@ -8,7 +8,9 @@ import Web.View.Polls.Show
 
 instance Controller PollsController where
     action PollsAction = do
-        polls <- query @Poll |> fetch
+        polls <- query @Poll
+         |> orderByDesc #createdAt 
+         |> fetch
         render IndexView { .. }
 
     action NewPollAction = do
@@ -17,6 +19,7 @@ instance Controller PollsController where
 
     action ShowPollAction { pollId } = do
         poll <- fetch pollId
+            >>= fetchRelated #options
         render ShowView { .. }
 
     action EditPollAction { pollId } = do
@@ -53,3 +56,4 @@ instance Controller PollsController where
 
 buildPoll poll = poll
     |> fill @'["name"]
+    |> validateField #name nonEmpty

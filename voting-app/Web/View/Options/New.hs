@@ -1,7 +1,7 @@
 module Web.View.Options.New where
 import Web.View.Prelude
 
-data NewView = NewView { option :: Option }
+data NewView = NewView { option :: Option, poll:: Poll }
 
 instance View NewView where
     html NewView { .. } = [hsx|
@@ -11,13 +11,13 @@ instance View NewView where
                 <li class="breadcrumb-item active">New Option</li>
             </ol>
         </nav>
-        <h1>New Option</h1>
+        <h1>New Option for poll {get #name poll}</h1>
         {renderForm option}
     |]
 
 renderForm :: Option -> Html
 renderForm option = formFor option [hsx|
     {(textField #optionLabel)}
-    {(textField #pollId)}
+    {(hiddenField #pollId)}
     {submitButton}
 |]

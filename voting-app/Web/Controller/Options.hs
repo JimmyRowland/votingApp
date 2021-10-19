@@ -11,8 +11,10 @@ instance Controller OptionsController where
         options <- query @Option |> fetch
         render IndexView { .. }
 
-    action NewOptionAction = do
+    action NewOptionAction {pollId} = do
         let option = newRecord
+             |> set #pollId pollId
+        poll <- fetch pollId
         render NewView { .. }
 
     action ShowOptionAction { optionId } = do
@@ -39,11 +41,13 @@ instance Controller OptionsController where
         option
             |> buildOption
             |> ifValid \case
-                Left option -> render NewView { .. } 
+                Left option -> do 
+                     poll <- fetch (get #pollId option)  
+                     render NewView { .. } 
                 Right option -> do
                     option <- option |> createRecord
                     setSuccessMessage "Option created"
-                    redirectTo OptionsAction
+                    redirectTo ShowPollAction {pollId = get #pollId option}
 
     action DeleteOptionAction { optionId } = do
         option <- fetch optionId
@@ -53,3 +57,4 @@ instance Controller OptionsController where
 
 buildOption option = option
     |> fill @["optionLabel","pollId"]
+    |> validateField #optionLabel nonEmpty

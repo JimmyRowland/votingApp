@@ -10,7 +10,6 @@ instance View IndexView where
                 <li class="breadcrumb-item active"><a href={OptionsAction}>Options</a></li>
             </ol>
         </nav>
-        <h1>Index <a href={pathTo NewOptionAction} class="btn btn-primary ml-4">+ New</a></h1>
         <div class="table-responsive">
             <table class="table">
                 <thead>
