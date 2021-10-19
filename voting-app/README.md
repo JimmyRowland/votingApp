@@ -8,11 +8,9 @@ The template to edit begins below. You can delete this header section once you'v
 
 We will post some additional material to include when you reach the final project stage.
 
-# Insert My Excellent Project Title Here
+# Voting App
 
-This will be replaced with a very brief (one paragraph, 2-3 sentences) overview of the project.
-
-Leave the following sentence in so you can easily link back to the requirements and *especially* rubric while editing your project:
+The voting app is a website where users can create polls, cast votes, and see the results of a poll. Results can be calculated using different algorithms such as FPTP, instant runoff, or condorcet method.
 
 This project is in fulfillment of the [CPSC 312 2021W1 project requirements](https://steven-wolfman.github.io/cpsc-312-website/project.html).
 
@@ -21,9 +19,9 @@ This project is in fulfillment of the [CPSC 312 2021W1 project requirements](htt
 Our team is:
 
 + Team Member Name 1 (student # 1): optional awesome nickname 1
-+ Team Member Name 2 (student # 2): optional awesome nickname 2
-+ If you have a third member: Team Member Name 3 (student # 3): optional awesome nickname 3
-+ If you have a fourth member: Team Member Name 4 (student # 4): optional awesome nickname 4
++ Yu Tian (student # 42474049)
++ Nancy Ye (student # 10906550)
++ Yuchen Rao  (student # 12101614): Eddie
 
 We call ourselves: optional awesome team name.
 
