@@ -86,7 +86,30 @@ A good goal to aim for is the top rubric item from proposal grading:
 
 ### How to test and run the code: Haskell
 
-Replace this section with instructions to us for how to test and run your code.
+Ubuntu:
+
+install nix
+
+```
+curl -L https://nixos.org/nix/install | sh
+```
+
+set environment variables
+```
+  . ~/.nix-profile/etc/profile.d/nix.sh
+```
+
+install ihp
+```
+nix-env -f https://downloads.digitallyinduced.com/ihp-new.tar.gz -i ihp-new
+```
+
+Open terminal under voting-app dir and run
+```
+./start
+```
+
+
 
 As it is currently set up, editing works best if you first `cd` into the `haskell` subdirectory and open VS Code on that directory (`code .`). There is a `Makefile` with some helpful aliases, but you can also just use `stack` as normal.
 
