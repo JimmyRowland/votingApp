@@ -31,7 +31,7 @@ data OptionsController
 
 data VotesController
     = VotesAction
-    | NewVoteAction
+    | NewVoteAction { pollId :: !(Id Poll) }
     | ShowVoteAction { voteId :: !(Id Vote) }
     | CreateVoteAction
     | EditVoteAction { voteId :: !(Id Vote) }

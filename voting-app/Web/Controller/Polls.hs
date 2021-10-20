@@ -55,5 +55,5 @@ instance Controller PollsController where
         redirectTo PollsAction
 
 buildPoll poll = poll
-    |> fill @'["name"]
+    |> fill @["name", "isReleased"]
     |> validateField #name nonEmpty

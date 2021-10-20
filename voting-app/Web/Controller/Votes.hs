@@ -11,8 +11,10 @@ instance Controller VotesController where
         votes <- query @Vote |> fetch
         render IndexView { .. }
 
-    action NewVoteAction = do
+    action NewVoteAction {pollId} = do
         let vote = newRecord
+                |> set #pollId pollId
+        poll <- fetch pollId
         render NewView { .. }
 
     action ShowVoteAction { voteId } = do
@@ -39,7 +41,9 @@ instance Controller VotesController where
         vote
             |> buildVote
             |> ifValid \case
-                Left vote -> render NewView { .. } 
+                Left vote -> do 
+                    poll <- fetch (get #pollId vote)  
+                    render NewView { .. } 
                 Right vote -> do
                     vote <- vote |> createRecord
                     setSuccessMessage "Vote created"

@@ -18,5 +18,6 @@ instance View EditView where
 renderForm :: Poll -> Html
 renderForm poll = formFor poll [hsx|
     {(textField #name)}
+    {(checkboxField #isReleased)}
     {submitButton}
 |]

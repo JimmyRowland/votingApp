@@ -2,7 +2,8 @@
 CREATE TABLE polls (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    is_released BOOLEAN DEFAULT false NOT NULL
 );
 CREATE TABLE options (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
@@ -30,3 +31,4 @@ ALTER TABLE options ADD CONSTRAINT options_ref_poll_id FOREIGN KEY (poll_id) REF
 ALTER TABLE ranks ADD CONSTRAINT ranks_ref_option_id FOREIGN KEY (option_id) REFERENCES options (id) ON DELETE NO ACTION;
 ALTER TABLE ranks ADD CONSTRAINT ranks_ref_vote_id FOREIGN KEY (vote_id) REFERENCES votes (id) ON DELETE NO ACTION;
 ALTER TABLE votes ADD CONSTRAINT votes_ref_poll_id FOREIGN KEY (poll_id) REFERENCES polls (id) ON DELETE NO ACTION;
+ALTER TABLE options ADD CONSTRAINT option_label_poll_id_unique UNIQUE (option_label, poll_id);

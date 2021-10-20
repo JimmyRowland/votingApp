@@ -4,27 +4,7 @@ import Web.View.Prelude
 data IndexView = IndexView { votes :: [Vote] }
 
 instance View IndexView where
-    html IndexView { .. } = [hsx|
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href={VotesAction}>Votes</a></li>
-            </ol>
-        </nav>
-        <h1>Index <a href={pathTo NewVoteAction} class="btn btn-primary ml-4">+ New</a></h1>
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Vote</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>{forEach votes renderVote}</tbody>
-            </table>
-        </div>
-    |]
+    html IndexView { .. } = [hsx||]
 
 
 renderVote :: Vote -> Html

@@ -1,7 +1,7 @@
 module Web.View.Votes.New where
 import Web.View.Prelude
 
-data NewView = NewView { vote :: Vote }
+data NewView = NewView { vote :: Vote, poll:: Poll }
 
 instance View NewView where
     html NewView { .. } = [hsx|
@@ -18,5 +18,6 @@ instance View NewView where
 renderForm :: Vote -> Html
 renderForm vote = formFor vote [hsx|
     {(textField #pollId)}
+    {(hiddenField #pollId)}
     {submitButton}
 |]
