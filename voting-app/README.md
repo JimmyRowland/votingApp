@@ -109,6 +109,16 @@ nix-env -f https://downloads.digitallyinduced.com/ihp-new.tar.gz -i ihp-new
 
 restart OS
 
+Open terminal under disposable directory run
+
+```
+ihp-new blog
+```
+
+Choose y n y for the following questions.
+
+
+
 Open terminal under voting-app dir and run
 ```
 ./start
