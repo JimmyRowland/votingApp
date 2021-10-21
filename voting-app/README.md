@@ -1,24 +1,15 @@
 # CPSC 312 Project
 
-Project Template for CPSC 312 Projects. Use this for both your proposal and final project submission.
-
-(Since you are submitting a link to a specific commit, we will be able to tell the difference.)
-
-The template to edit begins below. You can delete this header section once you've begun.
-
-We will post some additional material to include when you reach the final project stage.
-
 # Voting App
 
 The voting app is a website where users can create polls, cast votes, and see the results of a poll. Results can be calculated using different algorithms such as FPTP, instant runoff, or condorcet method.
 
-This project is in fulfillment of the [CPSC 312 2021W1 project requirements](https://steven-wolfman.github.io/cpsc-312-website/project.html).
 
 ## Team Members
 
 Our team is:
 
-+ Team Member Name 1 (student # 1): optional awesome nickname 1
++ Audrey Lu (student # 41655101)
 + Yu Tian (student # 42474049)
 + Nancy Ye (student # 10906550)
 + Yuchen Rao  (student # 12101614): Eddie
@@ -27,66 +18,66 @@ We call ourselves: optional awesome team name.
 
 ## Product Pitch
 
-Replace this with a pitch for your project and the problem it solves. This is your vision for what the project
-would like like as a complete product, ready for awesome action. (Yes, awesomeness seems to be a theme.)
-It may be as short as a couple of paragraphs, or it may be longer. It should **definitely** take less than 4 minutes
-to read carefully and thoroughly.
+Currently a lot of voting systems are flawed because depending on how many options are available and how similar some options are to each other, voters end up voting for the option they least want due to vote splitting. Although in national elections, there are other ways of voting that don’t include voting for a candidate belonging to a party like for example, in some countries, voters cast points and the party with the least points wins. In Canada, the voting system is first past the post which means that the party that gets the most votes wins the election. This is regardless of the percentage of voters that did not vote for them. This means that the actual voter choice was not well captured in the election. This is further exacerbated by the issue of vote splitting.
 
-Be sure that this touches clearly on the [project requirements](https://steven-wolfman.github.io/cpsc-312-website/project.html#project-requirements).
+We want to instead advocate for a ranked ballot system where voters rank their choices. The ranked choices of each voter is counted and starting from the first choice, if they make it past 50% of the total votes then they win. If not, then the party with the least votes gets eliminated and their first choice votes get reassigned to parties who are listed as the vote’s second choice. This process repeats until a party reaches past 50% of the total vote share, which means they have the majority.
 
-Good goals to aim for are from the top two rubric items for proposal grading:
+Although this doesn’t tackle bigger issues to voting equality like gerrymandering, lobbying, campaign finance, etc. It is a process that can be fixed more easily due to it’s more technical nature of implementation (assuming that there is more social and political will to set that in motion). While each of the other issues are a Byzantine hydra that requires more capability than Haskell programming, a ranked voting system can be done through programming (albeit electronic, so that carries a whole new set of issues that we won’t be addressing here because we need a project to do).
 
-> Exciting and language-appropriate product idea tackling a problem that is clearly compelling to a significant audience.
-
-Or:
-
-> Solid and language-appropriate product idea with a problem that is of real interest to the submitting team.
-
-(It's easy to focus on the product and not the problem. Remember to include both!)
+We envision our full project will be a ranked ballot system where the user (voter) can rank the options in order from most to least wanted. They don’t have to fill out the entire ranked ballot. For example, if there are five options but a voter detests one of the options, then they can leave the fifth option blank.
 
 ## Minimal Viable Project
 
-Replace this with a description of the minimal viable project you will actually build for CPSC 312 (if this becomes your final project).
-It may be as short as a few paragraphs, or it may be longer. It should **definitely** take less than 4 minutes
-to read carefully and thoroughly.
+On the voting app, user will be able to create polls, add options to a poll, release a poll for voting, and rank options of a poll. When user finish voting, user will see the condorcet/instant runoff/borda count winner.
+Haskell is great for data processing and web server where most data structures are immutable. IHP is great framework for beginner. It is highly opinionated. It teaches users how to write class/interface/data types. It teaches
+the downside of lazy evaluation in web env. It also gives many interesting abstratings like piping and type application. It also utilizes hsx syntax. The framework also demonstrate how code generation is possible with Haskell.
 
-Make clear:
-+ how this builds meaningfully toward your product pitch above, without being nearly as much work,
-+ how it builds on the strength and power of the language, and
-+ how it leads naturally to learning and applying some new element of the language (including what that element is!)
+[Piping |>](https://github.com/JimmyRowland/votingApp/blob/99454c306784af2721bd9e65d23c63170f635f65/voting-app/Web/Controller/Polls.hs#L24-L26)
 
-Good goals to aim for are from the top two rubric items for proposal grading:
+[Immutable data structure set](https://github.com/JimmyRowland/votingApp/blob/99454c306784af2721bd9e65d23c63170f635f65/voting-app/Web/Controller/Ranks.hs#L15-L16)
 
-> The minimal viable project (MVP) builds on the strengths and power of the language in exciting ways that will clearly lead to excellent learning for students.
+[Bang operator !](https://github.com/JimmyRowland/votingApp/blob/99454c306784af2721bd9e65d23c63170f635f65/voting-app/Web/Types.hs#L15)
 
-Or:
+[Type application @](https://github.com/JimmyRowland/votingApp/blob/99454c306784af2721bd9e65d23c63170f635f65/voting-app/Web/Controller/Ranks.hs#L69-L70)
 
-> The MVP clearly builds significantly on the language and will lead in interesting and natural ways to learning for the students.
+[HSX](https://github.com/JimmyRowland/votingApp/blob/99454c306784af2721bd9e65d23c63170f635f65/voting-app/Web/View/Polls/Show.hs#L6-L25)
 
 ## Proof of Concept
 
-Replace this with a description of your proof-of-concept. This may be as short as a few paragraphs, or it may be longer.
-It should **definitely** take less than 4 minutes to read carefully and thoroughly, though working through and running the
-code may take an extra 4 minutes. (Your guidance and links should make it easy for us to work through the code.)
+Click [Demo](https://onwnaiaphfjekhzifptgaqlfzzkdjsji.ihpapp.com/) to visit the app
 
-Tell us:
+The proof of concept focuses on poll creation and casting vote.
 
-+ what key element of your project the proof-of-concept focuses on
-+ what makes that such an important element
-+ how completing this gives you confidence that, with sufficient work, you could complete the full (minimal viable) project
+Here are some example actions created for the app
 
-Include links (likely even line-level links, which are easy to create in Github) throughout to critical pieces of
-the code to make it easy for us to understand what you've accomplished and how it fulfills the requirements.
+[poll controller](https://github.com/JimmyRowland/votingApp/blob/99454c306784af2721bd9e65d23c63170f635f65/voting-app/Web/Controller/Polls.hs#L20-L29)
 
-Also include instructions for us to test and run your code. (See our guidelines below.)
+[rank controller](https://github.com/JimmyRowland/votingApp/blob/99454c306784af2721bd9e65d23c63170f635f65/voting-app/Web/Controller/Ranks.hs#L9-L29)
 
-A good goal to aim for is the top rubric item from proposal grading:
+Here are some views created for the app
 
-> Fully functional proof-of-concept is easy to use and review, and it clearly demonstrates a key element necessary for the overall project.
+[poll by id page](https://github.com/JimmyRowland/votingApp/blob/99454c306784af2721bd9e65d23c63170f635f65/voting-app/Web/View/Polls/Show.hs#L6-L43)
+
+[Create rank page](https://github.com/JimmyRowland/votingApp/blob/99454c306784af2721bd9e65d23c63170f635f65/voting-app/Web/View/Ranks/New.hs#L6-L29)
+
+The most difficult part of the app is to set up the web server, creating controllers, linking pages.
+It's always difficult to understand haskell data structures and applicable interfaces.
+Most of the minimum requirements and challenging parts are completed. To finish the MVP, we only need to parse the poll data structure, implement condorcet method / instant runoff, and display the result.
+(Result is displayed as option id at the moment)
 
 ### How to test and run the code: Haskell
 
+Browser:
+
+Click [Demo](https://onwnaiaphfjekhzifptgaqlfzzkdjsji.ihpapp.com/) to visit the app
+
 Ubuntu:
+
+install curl
+
+```
+sudo apt install curl
+```
 
 install nix
 
@@ -94,34 +85,38 @@ install nix
 curl -L https://nixos.org/nix/install | sh
 ```
 
-set environment variables
+run
+
 ```
-  . ~/.nix-profile/etc/profile.d/nix.sh
+nano ~/.bashrc
+```
+
+Add following at the bottom
+
+```
+. ~/.nix-profile/etc/profile.d/nix.sh
+```
+
+run following to set environment variables
+```
+. ~/.nix-profile/etc/profile.d/nix.sh
 ```
 
 install ihp
 ```
 nix-env -f https://downloads.digitallyinduced.com/ihp-new.tar.gz -i ihp-new
-
-
 ```
+
+restart OS
 
 Open terminal under voting-app dir and run
 ```
 ./start
 ```
-![alt text](./voting-app/static/images/Screenshot from 2021-10-20 19-05-34.png)
 
+[Go to http://localhost:8000/](http://localhost:8000/) to visit the app
 
-
-
-As it is currently set up, editing works best if you first `cd` into the `haskell` subdirectory and open VS Code on that directory (`code .`). There is a `Makefile` with some helpful aliases, but you can also just use `stack` as normal.
-
-Note: We expect to be able to test your code by running `stack test`. Included among your tests should be some that demonstrate the core functionality of your code. (We will be running `make haskell-eval` from the project root.)
-
-We should be able to further explore your code's functionality by running `stack ghci`, and you should instruct us on some interesting cases to try.
-
-If you include instructions different from these, be **absolutely sure** that they will work well for us in whatever environment we run your code and that they will be as easy to use as the instructions above!
+Follow the instruction on front page to create polls
 
 ### How to test and run the code: Prolog
 
