@@ -102,12 +102,16 @@ set environment variables
 install ihp
 ```
 nix-env -f https://downloads.digitallyinduced.com/ihp-new.tar.gz -i ihp-new
+
+
 ```
 
 Open terminal under voting-app dir and run
 ```
 ./start
 ```
+![alt text](./voting-app/static/images/Screenshot from 2021-10-20 19-05-34.png)
+
 
 
 
