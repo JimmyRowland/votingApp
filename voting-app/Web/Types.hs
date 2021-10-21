@@ -41,7 +41,7 @@ data VotesController
 
 data RanksController
     = RanksAction
-    | NewRankAction
+    | NewRankAction { voteId :: !(Id Vote) }
     | ShowRankAction { rankId :: !(Id Rank) }
     | CreateRankAction
     | EditRankAction { rankId :: !(Id Rank) }

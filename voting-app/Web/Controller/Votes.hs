@@ -47,7 +47,7 @@ instance Controller VotesController where
                 Right vote -> do
                     vote <- vote |> createRecord
                     setSuccessMessage "Vote created"
-                    redirectTo VotesAction
+                    redirectTo NewRankAction {voteId = (get #id vote)}
 
     action DeleteVoteAction { voteId } = do
         vote <- fetch voteId

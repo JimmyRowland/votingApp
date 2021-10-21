@@ -17,7 +17,6 @@ instance View NewView where
 
 renderForm :: Vote -> Html
 renderForm vote = formFor vote [hsx|
-    {(textField #pollId)}
     {(hiddenField #pollId)}
     {submitButton}
 |]

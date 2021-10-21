@@ -10,10 +10,22 @@ instance Controller RanksController where
     action RanksAction = do
         ranks <- query @Rank |> fetch
         render IndexView { .. }
-
-    action NewRankAction = do
+    
+    action NewRankAction {voteId} = do
         let rank = newRecord
-        render NewView { .. }
+                |> set #voteId voteId
+        vote <- fetch voteId
+            >>= fetchRelated #ranks
+        poll <- fetch (get #pollId vote)
+            >>= fetchRelated #options
+
+        let options = getRemainingOptions (get #ranks vote) (get #options poll)
+        
+        let isLastOption = length (get #ranks vote) == length (get #options poll)
+
+        if isLastOption
+            then (redirectTo ShowPollAction {pollId = (get #pollId vote)})
+            else render NewView { .. }
 
     action ShowRankAction { rankId } = do
         rank <- fetch rankId
@@ -39,11 +51,14 @@ instance Controller RanksController where
         rank
             |> buildRank
             |> ifValid \case
-                Left rank -> render NewView { .. } 
+                Left rank -> do 
+                    redirectTo NewRankAction {voteId= (get #voteId rank) }  
                 Right rank -> do
-                    rank <- rank |> createRecord
+                    vote <- fetch (get #voteId rank)
+                        >>= fetchRelated #ranks
+                    rank <- rank |> set #rank (length (get #ranks vote)) |> createRecord
                     setSuccessMessage "Rank created"
-                    redirectTo RanksAction
+                    redirectTo NewRankAction {voteId= (get #voteId rank) }
 
     action DeleteRankAction { rankId } = do
         rank <- fetch rankId
@@ -53,3 +68,8 @@ instance Controller RanksController where
 
 buildRank rank = rank
     |> fill @["optionId","voteId","rank"]
+
+getRemainingOptions ranks = filter (not. (contains ranks))
+
+contains [] option = False
+contains (rank:ranks) option = (get #id option == get #optionId rank) || contains ranks option

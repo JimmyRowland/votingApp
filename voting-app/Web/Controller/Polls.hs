@@ -20,6 +20,12 @@ instance Controller PollsController where
     action ShowPollAction { pollId } = do
         poll <- fetch pollId
             >>= fetchRelated #options
+        
+        votes <- query @Vote
+            |> filterWhere (#pollId, pollId)
+            |> fetch
+            >>= collectionFetchRelated #ranks
+        
         render ShowView { .. }
 
     action EditPollAction { pollId } = do

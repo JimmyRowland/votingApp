@@ -1,7 +1,7 @@
 module Web.View.Ranks.New where
 import Web.View.Prelude
 
-data NewView = NewView { rank :: Rank }
+data NewView = NewView { rank :: Rank, vote:: Include "ranks" Vote, poll :: Include "options" Poll, options:: [Option] }
 
 instance View NewView where
     html NewView { .. } = [hsx|
@@ -11,14 +11,19 @@ instance View NewView where
                 <li class="breadcrumb-item active">New Rank</li>
             </ol>
         </nav>
-        <h1>New Rank</h1>
-        {renderForm rank}
+        <h1>{get #name poll}</h1>
+        <h2>Please select your {length (get #ranks vote) + 1} choice</h2>
+        {renderForm rank options}
     |]
 
-renderForm :: Rank -> Html
-renderForm rank = formFor rank [hsx|
-    {(textField #optionId)}
-    {(textField #voteId)}
-    {(textField #rank)}
+instance CanSelect Option where
+    type SelectValue Option = Id Option
+    selectValue = get #id
+    selectLabel = get #optionLabel
+
+renderForm :: Rank -> [Option] -> Html
+renderForm rank options = formFor rank [hsx|
+    {(selectField #optionId options)}
+    {(hiddenField #voteId)}
     {submitButton}
 |]
