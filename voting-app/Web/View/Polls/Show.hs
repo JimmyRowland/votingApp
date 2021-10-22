@@ -23,15 +23,17 @@ instance View ShowView where
         |] where renderOption option = [hsx| <p>{get #optionLabel option}</p>
     |]
 
-
+-- if the poll is released, don't show add option button
 renderAddOption poll = case get #isReleased poll of
     True -> [hsx||]
     False -> [hsx|<a href={NewOptionAction (get #id poll)}>Add option</a>|]
 
+-- if the poll is released, then we don't show add a vote link
 renderAddVote poll = case get #isReleased poll of
     True -> [hsx|<a href={NewVoteAction (get #id poll)}>Add vote</a>|]
     False -> [hsx||]
 
+-- Show a list of option id for now
 
 -- getOptionLabel :: (Eq a, Foldable t, HasField "id" model a,
 --  HasField "optionLabel" (Maybe model) String) => t model -> a -> String

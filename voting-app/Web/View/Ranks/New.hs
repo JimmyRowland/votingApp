@@ -16,6 +16,8 @@ instance View NewView where
         {renderForm rank options}
     |]
 
+-- specify option id and label for ihp to generate <input type='select'/> and js
+
 instance CanSelect Option where
     type SelectValue Option = Id Option
     selectValue = get #id

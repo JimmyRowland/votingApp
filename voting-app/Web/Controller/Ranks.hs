@@ -11,6 +11,7 @@ instance Controller RanksController where
         ranks <- query @Rank |> fetch
         render IndexView { .. }
     
+    -- Create a record for a single ranked option and go to the next rank creation page or poll by id page
     action NewRankAction {voteId} = do
         let rank = newRecord
                 |> set #voteId voteId
@@ -19,6 +20,7 @@ instance Controller RanksController where
         poll <- fetch (get #pollId vote)
             >>= fetchRelated #options
 
+        -- Filter out ranked options
         let options = getRemainingOptions (get #ranks vote) (get #options poll)
         
         let isLastOption = length (get #ranks vote) == length (get #options poll)
