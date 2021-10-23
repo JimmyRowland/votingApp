@@ -49,15 +49,17 @@ The proof of concept focuses on poll creation and casting vote.
 
 Here are some example actions created for the app
 
-[poll controller](https://github.com/JimmyRowland/votingApp/blob/99454c306784af2721bd9e65d23c63170f635f65/voting-app/Web/Controller/Polls.hs#L20-L29)
+See inline comments for what we did
 
-[rank controller](https://github.com/JimmyRowland/votingApp/blob/99454c306784af2721bd9e65d23c63170f635f65/voting-app/Web/Controller/Ranks.hs#L9-L29)
+[poll controller](https://github.students.cs.ubc.ca/tfoolery/CPSC-312-project/blob/7d8cce64f5b58f1764af4af494950a0d2b8597eb/voting-app/Web/Controller/Polls.hs#L21-L32)
+
+[rank controller](https://github.students.cs.ubc.ca/tfoolery/CPSC-312-project/blob/7d8cce64f5b58f1764af4af494950a0d2b8597eb/voting-app/Web/Controller/Ranks.hs#L10-L30)
 
 Here are some views created for the app
 
-[poll by id page](https://github.com/JimmyRowland/votingApp/blob/99454c306784af2721bd9e65d23c63170f635f65/voting-app/Web/View/Polls/Show.hs#L6-L43)
+[poll by id page](https://github.students.cs.ubc.ca/tfoolery/CPSC-312-project/blob/7d8cce64f5b58f1764af4af494950a0d2b8597eb/voting-app/Web/View/Polls/Show.hs#L6-L45)
 
-[Create rank page](https://github.com/JimmyRowland/votingApp/blob/99454c306784af2721bd9e65d23c63170f635f65/voting-app/Web/View/Ranks/New.hs#L6-L29)
+[Create rank page](https://github.students.cs.ubc.ca/tfoolery/CPSC-312-project/blob/7d8cce64f5b58f1764af4af494950a0d2b8597eb/voting-app/Web/View/Ranks/New.hs#L1-L31)
 
 The most difficult part of the app is to set up the web server, creating controllers, linking pages.
 It's always difficult to understand haskell data structures and applicable interfaces.
