@@ -35,8 +35,8 @@ If the Condorcet method results in a tie, then a Borda Count will be made. Borda
 We have decided to do Condorcet and Borda Count for our ranked voting system because Instant Run-off, as described in the product pitch, is too complex to implement. The algorithm to implement Condorcet and Borda is much easier, while still holding true to the idea of ranked voting. 
 
 ### Further reading: 
-[Condorcet Voting](https://www.opavote.com/methods/condorcet-voting)
-[Borda Count](https://www2.math.upenn.edu/~deturck/m170/wk10/lecture/vote2.html) 
+[Condorcet Voting__](https://www.opavote.com/methods/condorcet-voting)
+[Borda Count__](https://www2.math.upenn.edu/~deturck/m170/wk10/lecture/vote2.html) 
 
 On the voting app, users will be able to create polls, add options to a poll, release a poll for voting, and rank options of a poll. When a user finishes voting, the user will see the condorcet/instant runoff/borda count winner.
 Haskell is great for data processing and web servers where most data structures are immutable and IHP is great framework for beginner. It is highly opinionated, teaches users how to write class/interface/data types, and also teaches the downside of lazy evaluation in web env. Additionally, it gives many interesting abstractions like piping and type application, and also utilizes hsx syntax. The framework also demonstrate how code generation is possible with Haskell.
