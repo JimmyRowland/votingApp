@@ -39,7 +39,7 @@ We have decided to do Condorcet and Borda Count for our ranked voting system bec
 ### Further reading: 
 * [Condorcet Voting](https://www.opavote.com/methods/condorcet-voting)
 * [Borda Count](https://www2.math.upenn.edu/~deturck/m170/wk10/lecture/vote2.html) 
-.
+
 Haskell is great for data processing and web servers where most data structures are immutable and IHP is great framework for beginner. It is highly opinionated, teaches users how to write class/interface/data types, and also teaches the downside of lazy evaluation in web env. Additionally, it gives many interesting abstractions like piping and type application, and also utilizes hsx syntax. The framework also demonstrate how code generation is possible with Haskell.
 
 [Piping |>](https://github.com/JimmyRowland/votingApp/blob/99454c306784af2721bd9e65d23c63170f635f65/voting-app/Web/Controller/Polls.hs#L24-L26)
