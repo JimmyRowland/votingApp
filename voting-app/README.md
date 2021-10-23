@@ -34,7 +34,7 @@ If the Condorcet method results in a tie, then a Borda Count will be made. Borda
 
 We have decided to do Condorcet and Borda Count for our ranked voting system because Instant Run-off, as described in the product pitch, is too complex to implement. The algorithm to implement Condorcet and Borda is much easier, while still holding true to the idea of ranked voting. 
 
-# Further reading: 
+### Further reading: 
 [Condorcet Voting](https://www.opavote.com/methods/condorcet-voting)
 [Borda Count](https://www2.math.upenn.edu/~deturck/m170/wk10/lecture/vote2.html) 
 
