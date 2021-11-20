@@ -20,7 +20,7 @@ We call ourselves: optional awesome team name.
 
 Currently, a lot of voting systems are flawed because depending on how many options are available and how similar those options are to each other, voters end up voting for the option they least want due to vote splitting. Although in national elections, there are other ways of voting that don’t include voting for a candidate belonging to a party. For example, in some countries, voters cast points and the party with the least points wins. In Canada, the voting system is first past the post which means that the party that gets the most votes wins the election. This is regardless of the percentage of voters that did not vote for them. This means that the actual voter choice was not well captured in the election. This is further exacerbated by the issue of vote splitting.
 
-We want to instead advocate for a ranked ballot system where voters rank their choices. The ranked choices of each voter is counted and starting from the first choice, if they make it past 50% of the total votes, they win. If not, then the party with the least votes gets eliminated and their first choice votes get reassigned to parties who are listed as the vote’s second choice. This process repeats until a party reaches past 50% of the total vote share, which means they have the majority.
+We want to instead advocate for an Instant Run-off version of the ranked ballot system where voters rank their choices. The ranked choices of each voter is counted and starting from the first choice, if they make it past 50% of the total votes, they win. If not, then the party with the least votes gets eliminated and their first choice votes get reassigned to parties who are listed as the vote’s second choice. This process repeats until a party reaches past 50% of the total vote share, which means they have the majority.
 
 Although this doesn’t tackle bigger issues to voting equality like gerrymandering, lobbying, campaign finance, etc. It is a process that can be fixed more easily due to it’s more technical nature of implementation (assuming that there is more social and political will to set that in motion). While each of the other issues are a Byzantine hydra that requires more capability than Haskell programming, a ranked voting system can be done through programming (albeit electronic, so that carries a whole new set of issues that we won’t be addressing here because we need a project to do).
 
@@ -28,7 +28,18 @@ We envision our full project will be a ranked ballot system where the user (vote
 
 ## Minimal Viable Project
 
-On the voting app, users will be able to create polls, add options to a poll, release a poll for voting, and rank options of a poll. When a user finishes voting, the user will see the condorcet/instant runoff/borda count winner.
+We will be using an IHP web framework to build a virtual polling web application. A user will be able to create polls, add options to the poll, and open up polling for other users, who will then be able to vote for their preferred options. The polling method we will use includes two methods of counting votes, the Condorcet method and the Borda Count method.
+
+After users have finished voting, the Condorcet method will be applied to the collected votes. For this method, a winner is selected after analyzing all possible pairs of options. For example, if there are three options, A, B, and C, then the three possible pairs are (A,B), (B,C), and (A,C). If A is more popular than B, then we look at (B,C). If C is more popular than B, then C wins and B is eliminated. Finally, we look at the comparison between A and C to determine the overall winner.
+
+In the case that the Condorcet method results in a tie, the Borda Count method is used. Borda Count is a method where each ranked choice is assigned a number of points. For example, in a poll that has five options, a first ranked choice is given 5 points per vote, second is given 4 points, and so on and so forth so that last place is given 1 point per vote. For each option, the number of voters that gave it a particular rank is multiplied by the number of points that rank is worth. For example, if Option A has 5 first choice votes, 3 second choice votes, 10 third choice votes, 1 fourth choice vote, and 2 fifth choice votes, then it gets (5 points/vote * 5 votes)+(4 points/vote * 3 votes)+(3 points/vote * 10 votes)+(2 points/vote * 1 vote)+(1 point/vote * 2 votes) = 71 points for Option A. This process is repeated for all other options such that the option with the most number of points wins overall.
+
+We have decided to do Condorcet and Borda Count for our ranked voting system because Instant Run-off, as described in the product pitch, is too complex to implement for a minimal viable product. The Condorcet and Borda methods can be implemented and put in use much faster to create a ranked voting system.
+ 
+### Further reading: 
+* [Condorcet Voting](https://www.opavote.com/methods/condorcet-voting)
+* [Borda Count](https://www2.math.upenn.edu/~deturck/m170/wk10/lecture/vote2.html) 
+
 Haskell is great for data processing and web servers where most data structures are immutable and IHP is great framework for beginner. It is highly opinionated, teaches users how to write class/interface/data types, and also teaches the downside of lazy evaluation in web env. Additionally, it gives many interesting abstractions like piping and type application, and also utilizes hsx syntax. The framework also demonstrate how code generation is possible with Haskell.
 
 [Piping |>](https://github.com/JimmyRowland/votingApp/blob/99454c306784af2721bd9e65d23c63170f635f65/voting-app/Web/Controller/Polls.hs#L24-L26)
@@ -49,15 +60,17 @@ The proof of concept focuses on poll creation and casting vote.
 
 Here are some example actions created for the app
 
-[poll controller](https://github.com/JimmyRowland/votingApp/blob/99454c306784af2721bd9e65d23c63170f635f65/voting-app/Web/Controller/Polls.hs#L20-L29)
+See inline comments for what we did
 
-[rank controller](https://github.com/JimmyRowland/votingApp/blob/99454c306784af2721bd9e65d23c63170f635f65/voting-app/Web/Controller/Ranks.hs#L9-L29)
+[poll controller](https://github.students.cs.ubc.ca/tfoolery/CPSC-312-project/blob/7d8cce64f5b58f1764af4af494950a0d2b8597eb/voting-app/Web/Controller/Polls.hs#L21-L32)
+
+[rank controller](https://github.students.cs.ubc.ca/tfoolery/CPSC-312-project/blob/7d8cce64f5b58f1764af4af494950a0d2b8597eb/voting-app/Web/Controller/Ranks.hs#L10-L30)
 
 Here are some views created for the app
 
-[poll by id page](https://github.com/JimmyRowland/votingApp/blob/99454c306784af2721bd9e65d23c63170f635f65/voting-app/Web/View/Polls/Show.hs#L6-L43)
+[poll by id page](https://github.students.cs.ubc.ca/tfoolery/CPSC-312-project/blob/7d8cce64f5b58f1764af4af494950a0d2b8597eb/voting-app/Web/View/Polls/Show.hs#L6-L45)
 
-[Create rank page](https://github.com/JimmyRowland/votingApp/blob/99454c306784af2721bd9e65d23c63170f635f65/voting-app/Web/View/Ranks/New.hs#L6-L29)
+[Create rank page](https://github.students.cs.ubc.ca/tfoolery/CPSC-312-project/blob/7d8cce64f5b58f1764af4af494950a0d2b8597eb/voting-app/Web/View/Ranks/New.hs#L1-L31)
 
 The most difficult part of the app is to set up the web server, creating controllers, linking pages.
 It's always difficult to understand haskell data structures and applicable interfaces.
