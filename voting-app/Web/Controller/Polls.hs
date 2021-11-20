@@ -22,12 +22,19 @@ instance Controller PollsController where
         -- Fetches the poll by id and all of its options
         poll <- fetch pollId
             >>= fetchRelated #options
+        let options = get #options poll
+
+
+
+
         
         -- Fetches the votes for the poll and all of its ranks
         votes <- query @Vote
             |> filterWhere (#pollId, pollId)
             |> fetch
             >>= collectionFetchRelated #ranks
+
+        let winner = getWinner options votes
         
         render ShowView { .. }
     
@@ -70,3 +77,54 @@ instance Controller PollsController where
 buildPoll poll = poll
     |> fill @["name", "isReleased"]
     |> validateField #name nonEmpty
+
+
+
+
+
+getWinner [] _ = "No winner"
+getWinner _ [] = "No winner"
+getWinner [option] _ = get #optionLabel option
+getWinner options votes
+    | null condorcetWinnerInList = getBordaWinner options votes
+    | otherwise = getWinnerString condorcetWinnerInList
+    where condorcetWinnerInList = filter (\option -> (isCondorcetWinner option options votes)) options
+
+getWinnerString [] = "No winner"
+getWinnerString (option:options) = "Condorcet winner: " ++ (get #optionLabel option)
+getWinnerString _ = "No winner"
+
+isCondorcetWinner option options votes = 
+    let otherOptions = filter (\otherOption -> get #id option /= get #id otherOption) options
+    in foldr (\otherOption isWinner -> isWinner && (hasMoreVotes option otherOption votes)) True otherOptions
+
+
+hasMoreVotes option otherOption votes 
+    | diff > 0 = True
+    | otherwise = False
+    where diff = foldr (\vote acc -> acc + getRankDifference option otherOption (get #ranks vote)) 0 votes
+
+getRankDifference option otherOption [] = 0
+getRankDifference option otherOption ranks
+    | rankDiff == 0 = 0
+    | rankDiff > 0 = -1
+    | otherwise = 1
+    where rankDiff = (getOptionRank option ranks) - (getOptionRank otherOption ranks)
+
+getOptionRank option ranks =
+    let rankInList = filter (\rank -> get #optionId rank == get #id option) ranks
+    in getRank rankInList (length ranks)
+
+getRank [] max = max
+getRank (rank:ranks) _ = get #rank rank
+
+getBordaWinner [] _ = "No winner"
+getBordaWinner _ [] = "No winner"
+getBordaWinner (option:options) votes =
+    let (winnerOption, _) = foldr (\option (bestOption, bestBordaCount) -> let bordaCount = (getBordaCount option votes) in if (bordaCount < bestBordaCount || bestBordaCount < 0) then (option, bordaCount) else (bestOption, bestBordaCount)) (option, -1) (option:options)
+    in "Borda winner: " ++ (get #optionLabel winnerOption)
+
+    
+
+getBordaCount option votes = foldr (\vote acc -> acc + getOptionRank option (get #ranks vote)) 0 votes
+

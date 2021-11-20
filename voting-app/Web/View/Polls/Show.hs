@@ -1,7 +1,7 @@
 module Web.View.Polls.Show where
 import Web.View.Prelude
 
-data ShowView = ShowView { poll :: Include "options" Poll, votes:: [Include "ranks" Vote]}
+data ShowView = ShowView { poll :: Include "options" Poll, votes:: [Include "ranks" Vote], winner:: Text}
 
 instance View ShowView where
     html ShowView { .. } = [hsx|
@@ -19,7 +19,8 @@ instance View ShowView where
         <h3>options</h3>
         <div>{forEach (get #options poll) renderOption}</div>
         <h3>votes</h3>
-        {renderVotes (get #options poll) votes}
+        <h4>{winner}</h4>
+        <!-- {renderVotes (get #options poll) votes} -->
         |] where renderOption option = [hsx| <p>{get #optionLabel option}</p>
     |]
 
