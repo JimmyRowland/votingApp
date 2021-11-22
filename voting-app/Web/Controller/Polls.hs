@@ -85,14 +85,11 @@ buildPoll poll = poll
 getWinner [] _ = "No winner"
 getWinner _ [] = "No winner"
 getWinner [option] _ = get #optionLabel option
-getWinner options votes
-    | null condorcetWinnerInList = getBordaWinner options votes
-    | otherwise = getWinnerString condorcetWinnerInList
-    where condorcetWinnerInList = filter (\option -> (isCondorcetWinner option options votes)) options
+getWinner options votes =
+    case condorcetWinner of Nothing -> getStarWinner options votes
+                            Just option -> "Condorcet winner: " ++ (get #optionLabel option)
+    where condorcetWinner = find (\option -> (isCondorcetWinner option options votes)) options
 
-getWinnerString [] = "No winner"
-getWinnerString (option:options) = "Condorcet winner: " ++ (get #optionLabel option)
-getWinnerString _ = "No winner"
 
 isCondorcetWinner option options votes = 
     let otherOptions = filter (\otherOption -> get #id option /= get #id otherOption) options
@@ -118,11 +115,26 @@ getOptionRank option ranks =
 getRank [] max = max
 getRank (rank:ranks) _ = get #rank rank
 
-getBordaWinner [] _ = "No winner"
-getBordaWinner _ [] = "No winner"
-getBordaWinner (option:options) votes =
-    let (winnerOption, _) = foldr (\option (bestOption, bestBordaCount) -> let bordaCount = (getBordaCount option votes) in if (bordaCount < bestBordaCount || bestBordaCount < 0) then (option, bordaCount) else (bestOption, bestBordaCount)) (option, -1) (option:options)
-    in "Borda winner: " ++ (get #optionLabel winnerOption)
+getStarWinner options votes =
+    case starWinner of Nothing -> "No winner"
+                       Just option -> "Star winner: " ++ (get #optionLabel option)
+    where topTwoBordaWinner = getTopTwoBordaWinner options votes
+          starWinner = find (\option -> (isCondorcetWinner option topTwoBordaWinner votes)) topTwoBordaWinner
+
+getTopTwoBordaWinner [] _ = []
+getTopTwoBordaWinner [option] _ = [option]
+getTopTwoBordaWinner [option0, option1] _ = [option0, option1]
+getTopTwoBordaWinner options votes =
+    let optionsWithBordaCount = map (\option -> (option, getBordaCount option votes)) options
+        ((option0, bordaCount0): (option1, bordaCount1): _) = sortBy (\(_, bordaCount0) (_, bordaCount1) -> compare bordaCount0 bordaCount1) optionsWithBordaCount
+    in [option0, option1]
+
+quickSortBordaCounts [] = []
+quickSortBordaCounts [x] = [x]
+quickSortBordaCounts ((option, bordaCount):xs) = 
+    let (left, right) = partition (\(otherOption, otherBordaCount) -> otherBordaCount < bordaCount) xs
+    in quickSortBordaCounts left ++ [(option, bordaCount)] ++ quickSortBordaCounts right
+
 
     
 

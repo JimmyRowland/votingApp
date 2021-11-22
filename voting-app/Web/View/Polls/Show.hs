@@ -20,7 +20,7 @@ instance View ShowView where
         <div>{forEach (get #options poll) renderOption}</div>
         <h3>votes</h3>
         <h4>{winner}</h4>
-        <!-- {renderVotes (get #options poll) votes} -->
+        {renderVotes (get #options poll) votes}
         |] where renderOption option = [hsx| <p>{get #optionLabel option}</p>
     |]
 
