@@ -70,6 +70,7 @@ instance Controller RanksController where
 
 buildRank rank = rank
     |> fill @["optionId","voteId","rank"]
+    |> validateField #optionId nonEmpty
 
 getRemainingOptions ranks = filter (not. (contains ranks))
 
