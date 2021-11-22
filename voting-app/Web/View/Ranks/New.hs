@@ -12,7 +12,7 @@ instance View NewView where
             </ol>
         </nav>
         <h1>{get #name poll}</h1>
-        <h2>Please select your {length (get #ranks vote) + 1} choice</h2>
+        <h2>Please select your choice {length (get #ranks vote) + 1}</h2>
         {renderForm rank options}
     |]
 

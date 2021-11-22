@@ -54,7 +54,8 @@ instance Controller RanksController where
             |> buildRank
             |> ifValid \case
                 Left rank -> do 
-                    redirectTo NewRankAction {voteId= (get #voteId rank) }  
+                    vote <- fetch (get #voteId rank)
+                    redirectTo ShowPollAction {pollId = (get #pollId vote)}  
                 Right rank -> do
                     vote <- fetch (get #voteId rank)
                         >>= fetchRelated #ranks
